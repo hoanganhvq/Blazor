@@ -1,0 +1,372 @@
+linhb2203561@student.ctu.edu.vn
+ACV2905linh//
+
+
+com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+jdbc:sqlserver://localhost:1433;databaseName=XXX;encrypt=true;trustServerCertificate=true;integratedSecurity=true;username=root;password=root
+
+dotnet ef dbcontext scaffold "server=localhost; database=Staffs; uid=root; password=root" MySql.EntityFrameworkCore -o Models
+dotnet tool install --global dotnet-ef --version 8.*
+microsoft.entiry.design
+mysql.entiry
+StaffList
+@page "/stafflist"
+@rendermode InteractiveServer
+@inherits StaffListBase
+
+@if (staffs == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card-group">
+        @foreach (var staff in staffs)
+        {
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+                <div style="height: 100%" class="card h-100">
+                    <div class="card-header">
+                        <h3>@staff.FirstName @staff.LastName</h3>
+                    </div>
+                    <img class="card-img-top imageThumbnail" height="100%" src="@staff.Photo" />
+                    <div class="card-footer text-center">
+                        <a href="@($"staffdetails/{staff.StaffId}")" class="btn btn-primary m-1">View</a>
+                        <a href="@($"editstaff/{staff.StaffId}")" class="btn btn-primary m-1">Edit</a>
+                        <a href="#" class="btn btn-danger m-1">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@page "/staffdetails/{id}"
+@inherits StaffDetailsBase
+
+@if (staff == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row justify-content-center m-3">
+        <div class="col-sm-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@staff.FirstName @staff.LastName</h1>
+                </div>
+                <div class="card-body text-center">
+                    <img class="card-img-top" src="@staff.Photo" />
+                    <h4>Staff ID: @staff.StaffId</h4>
+                    <h4>Email: @staff.Email</h4>
+                    <h4>Starting Date: @staff.StartingDate.ToString()</h4>
+                    <h4>Department: @staff.DeptId</h4>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/stafflist" class="btn btn-primary">Back</a>
+                    <a href="@($"editstaff/{staff.StaffId}")" class="btn btn-primary m-1">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+	
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+@page "/stafflist"
+@rendermode InteractiveServer
+@inherits StaffListBase
+
+@if (staffs == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card-group">
+        @foreach (var staff in staffs)
+        {
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+                <div style="height: 100%" class="card h-100">
+                    <div class="card-header">
+                        <h3>@staff.FirstName @staff.LastName</h3>
+                    </div>
+                    @* <img class="card-img-top imageThumbnail" height="100%" src ="@staff.Photo" /> *@
+                    <div class="card-footer text-center">
+                        <a href="@($"staffdetails/{staff.EmployeeId}")" class="btn btn-primary m-1">View</a>
+                        <a href="@($"editstaff/{staff.EmployeeId}")" class="btn btn-primary m-1">Edit</a>
+                        <a href="#" class="btn btn-danger m-1">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+https://github.com/dotnet/aspnetcore/issues/13881
+
+
+insert into Gender(GenderID, GenderName) values (1, 'Male'), (2, 'Femele');
+
+
+
+INSERT INTO Employee (EmployeeID, FirstName, LastName, Email, StartingDate, GenderID, DepartmentID)
+VALUES
+(1, 'John', 'Doe', 'john.doe@example.com', '2020-06-15', 1, 101),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', '2019-03-12', 2, 102),
+(3, 'David', 'Brown', 'david.brown@example.com', '2021-08-01', 1, 101),
+(4, 'Emily', 'Davis', 'emily.davis@example.com', '2022-01-20', 2, 103);
+INSERT INTO Department (DepartmentID, DepartmentName)
+VALUES
+(101, 'Human Resources'),
+(102, 'Finance'),
+(103, 'IT Support'),
+(104, 'Marketing');
+INSERT INTO Gender (GenderID, GenderName)
+VALUES
+(1, 'Male'),
+(2, 'Female'),
+(3, 'Other');
+
+
+
+
+create database Staffs;
+use Staffs;
+create table Employee(EmployeeID int primary key, FirstName nvarchar(50), LastName nvarchar(50),
+email varchar(50), StartingDate date, GenderID int, DepartmentID varchar(20));
+
+create table Department(DepartmentID varchar(20) primary key, DepartmentName nvarchar(50));
+
+create table Gender(GenderID int primary key, GenderName Nvarchar(50));
+
+INSERT INTO Employee (EmployeeID, FirstName, LastName, email, StartingDate, GenderID, DepartmentID)
+VALUES 
+(1, 'John', 'Doe', 'john.doe@example.com', '2023-01-15', 1, 1),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', '2023-02-20', 2, 2),
+(3, 'Michael', 'Johnson', 'michael.j@example.com', '2023-03-05', 1, 2),
+(4, 'Emily', 'Davis', 'emily.davis@example.com', '2023-04-10', 2, 1);
+
+
+insert into Gender(GenderID, GenderName) values (1, 'Male'), (2, 'Femele');
+insert into Department(DepartmentID, DepartmentName) values (1, 'IT'), (2, 'HR');
+
+
+//CLEAN CODE VERSION
+create table Staff(
+	EmployeeID int primary key, 
+    FirstName nvarchar(50) not null, 
+    LastName nvarchar(50) not null,
+	email varchar(50), 
+    StartingDate date, 
+    GenderID int, 
+    DepartmentID varchar(20)
+);
+
+create table Department(
+	DepartmentID varchar(20) primary key, 
+    DepartmentName nvarchar(50)
+);
+
+create table Gender(
+	GenderID int primary key, 
+    GenderName Nvarchar(50));
+    
+    
+    
+INSERT INTO Staff (EmployeeID, FirstName, LastName, email, StartingDate, GenderID, DepartmentID)
+VALUES 
+(1, 'Tran Hai', 'Dang', 'john.doe@example.com', '2023-01-15', 1, 1),
+(2, 'Jane', 'Smith', 'jane.smith@example.com', '2023-02-20', 2, 2),
+(3, 'Michael', 'Johnson', 'michael.j@example.com', '2023-03-05', 1, 2),
+(4, 'Emily', 'Davis', 'emily.davis@example.com', '2023-04-10', 2, 1);
+
+
+insert into Gender(GenderID, GenderName) values (1, 'Male'), (2, 'Femele');
+insert into Department(DepartmentID, DepartmentName) values (1, 'IT'), (2, 'HR');
+
+
+
+
+
+
+
+
+using BlazorStaff.Models;
+using Microsoft.AspNetCore.Components;
+
+namespace BlazorStaff.Components.Pages;
+public class StaffListBase : ComponentBase{
+    [Inject]
+    public IStaffRepository staffRepository {get; set;}
+    public IEnumerable<Staff> staffs {get; set;}
+
+    protected async override Task OnInitializedAsync()
+    {
+        staffs = await staffRepository.GetAllStaff();
+    }
+}
+
+https://github.com/tdagn2202/AtSchoolCodes.git
+
+
+
+create database employees;
+
+use employees;
+
+create table EmployeeDetails(
+	name nvarchar(50), 
+    address nvarchar(100), 
+    startingDate datetime, 
+    EduID int ,
+    DepartmentID int, 
+    FOREIGN KEY (EduID) REFERENCES Education(EduID),
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
+
+create table Education (
+	EduID INT AUTO_INCREMENT PRIMARY KEY,
+    eduName nvarchar(100)
+);
+
+CREATE TABLE Department (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL
+);
+	
+  
+  
+  
+  insert into Education (eduName) values 
+	('UnderGraduate'),
+    ('PostGraduate');
+    
+insert into Department (DepartmentName) values 
+	('Human Resource'),
+    ('Marketing'),
+    ('R&D');
+    
+    CREATE TABLE Employee (
+    EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    StartingDate DATE NOT NULL,
+    EduID INT,
+    DepartmentID INT,
+    FOREIGN KEY (EduID) REFERENCES Education(EduID),
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
+
+
+
+
+
+
+create database employees;
+
+use employees;
+
+CREATE TABLE Employee (
+    EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    StartingDate DATE NOT NULL,
+    EduID INT,
+    DepartmentID INT,
+    FOREIGN KEY (EduID) REFERENCES Education(EduID),
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
+
+create table Education (
+	EduID INT AUTO_INCREMENT PRIMARY KEY,
+    eduName nvarchar(100)
+);
+
+CREATE TABLE Department (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL
+);
+
+
+
+insert into Education (eduName) values 
+	('UnderGraduate'),
+    ('PostGraduate');
+    
+insert into Department (DepartmentName) values 
+	('Human Resource'),
+    ('Marketing'),
+    ('R&D');
+
+insert into Employee(FirstName, LastName, Email, StartingDate, EduID, DepartmentID) values 
+	('Tran Hai', 'Dang', 'acb@gmail.com', '2004-02-02', 1, 1),
+    ('Nguyen Thanh', 'Ngan', 'xyz@gmail.com', '2004-02-02', 2, 2),
+    ('Nguyen Van', 'A', 'xyz@gmail.com', '2004-02-02', 2, 2),
+    ('Tran Van', 'B', 'xyz@gmail.com', '2004-02-02', 2, 3);
+    
+    
+    
+    
+    File I
+using EmployeeInfo.Models;
+
+public interface IEmployeeRepository {
+    Task<IEnumerable<Employee>> GetAllEmployees();
+    Task<Employee> GetEmployeeById(int id);
+
+
+
+File thuowng
+using EmployeeInfo.Models;
+
+public partial class EmployeeRepository : IEmployeeRepository {
+    EmployeesContext employeesContext;
+
+    EmployeeRepository(EmployeesContext employeesContext){
+        this.employeesContext = employeesContext;
+    }
+
+    int Id;
+    public async Task<Employee> GetEmployeeById(int id){
+        return (from employee in employeesContext.Employees
+        where employee.EmployeeId == id
+        select employee).First();
+    }
+
+    public async Task<IEnumerable<Employee>> GetAllEmployees(){
+        return employeesContext.Employees;
+    }
+    
+    
+    b2203561
+    taDN9yJ&
+    
+    linhb2203561@student.ctu.edu.vn
+    
+
+
+}
+
+https://drive.google.com/file/d/17RxAhGR7Ov4079sIzX69k5O8q2ooV2JR/view?usp=sharing
+
+
+https://www.tutorjoes.in/java_programming_tutorial/thread_exercise_programs_in_java
+
+
+
+
+

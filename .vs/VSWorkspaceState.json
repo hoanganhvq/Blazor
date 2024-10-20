@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Base",
+    "\\Components",
+    "\\Components\\Layout",
+    "\\Components\\Pages",
+    "\\Models",
+    "\\Repositories"
+  ],
+  "SelectedNode": "\\Components\\Pages\\EditStaff.razor",
+  "PreviewInSolutionExplorer": false
+}
